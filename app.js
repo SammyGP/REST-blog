@@ -60,7 +60,7 @@ app.get("/blogs/new", function(req, res){
 
 // CREATE
 app.post("/blogs", function(req, res){
-
+	req.body.blog.body = req.sanitize(req.body.blog.body);
 	// since in the new.ejs form every form input is inside the blog object (ie blog[title] or blog[name])
 	// so if you query it as the data it will contain all the inputs
 	// ============================================================
@@ -103,6 +103,7 @@ app.get("/blogs/:id/edit", function(req, res){
 
 // UPDATE
 app.put("/blogs/:id", function(req, res){
+	req.body.blog.body = req.sanitize(req.body.blog.body);
 	Blog.findByIdAndUpdate(req.params.id, req.body.blog, function(err, updatedBlog){
 		if(err) {
 			console.log("Error updating");
